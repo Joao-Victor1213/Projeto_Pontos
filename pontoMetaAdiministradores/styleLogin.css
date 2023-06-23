@@ -1,0 +1,67 @@
+
+
+@keyframes animacao2{
+    from{transform: scale(1);}
+    to{
+        transform: 
+        scale(0.97);
+        border-radius: 9px;
+    }
+}
+@keyframes animacao{
+    from{transform: scale(1);}
+    to{transform: scale(1.1);}
+}
+img:hover{
+    animation: animacao;
+    animation-duration: 0.5s;
+    transform: scale( 1.1);
+}
+input#botao:hover{
+  animation: animacao2;
+  animation-duration: 0.3s;
+  transform: scale(0.97);
+  border-radius: 9px;
+
+}
+body{
+    margin: 0;
+    padding: 0;
+    height: 1000px;
+    background: linear-gradient(30deg,rgb(247, 148, 29) 8%,white 40%);
+}
+form{
+align-self: center;
+}
+div#div-logo{
+    border-top: 3px solid #000;
+}
+img#logo{
+    margin-top: 150px;
+    width: 10%;
+}
+.login-input{
+    margin-top: 25px;
+    margin-right: 0,5%;
+    align-self: center;
+    width: 20%;
+    padding-top: 7px;
+    padding-bottom: 6px;
+    font-size: medium;
+}
+
+input#botao{
+    margin-left: 1%;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 0%;
+    text-align: center;
+    color: white;
+    border-color: rgb(247, 148, 29);
+    background-color: rgb(247, 148, 29);
+    font-weight: bold;
+    font-size: x-large;
+    width: 90px;
+    height: 40px;  
+}
