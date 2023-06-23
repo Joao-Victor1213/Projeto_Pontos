@@ -6,10 +6,11 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 
-$banco = 'id20153422_pontometa';
+$banco = 'pontometa';
 $host = 'localhost';
-$usuario = 'id20153422_root';
-$senha = '0?D5Bznb@Em|4(u[';
+$usuario = 'root';
+$senha = '';
+
 
 try{
     $pdo = new PDO("mysql:dbname=$banco;host=$host;charset=utf8","$usuario","$senha");
