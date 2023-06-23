@@ -48,7 +48,9 @@ try {
                                 funcionarios
                             SET
                                 email = '".$email."',
-                                senha = md5('".$senha."')
+                                senha = md5('".$senha."'),
+                                idDispositivo =  NULL,
+                                modeloDispositivo = NULL
                             WHERE
                                 cpf = '".$cpf."'
                         ");

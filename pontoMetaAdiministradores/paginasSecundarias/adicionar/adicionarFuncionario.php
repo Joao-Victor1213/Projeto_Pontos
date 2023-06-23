@@ -34,6 +34,7 @@ include_once("../../conexao.php");
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href = "../bases/base.css">
+    <link rel = "stylesheet" href = "adicionarFuncionario.css">
 
     <title>Sistema Metamorfose</title>
 </head>
@@ -57,12 +58,32 @@ include_once("../../conexao.php");
     </center>
     <div>
         <form method = "POST" id = 'formNovoUsuario'action = "adiciona.php" enctype = "multipart/form-data">
+            
             <input type = 'text' placeholder = "Nome do Funcionario" class = 'campoDeTexto' name = 'nomeFuncionario'>
             <input type = 'password' placeholder = "Senha" class = 'campoDeTexto' name = 'senhaFuncionario'>
-            <input type = 'email' placeholder = "Email" class = 'campoDeTexto' name = 'emailFuncionario'>
+            <input value = '@institutometamorfose.org.br' type = 'email' placeholder = "Email" class = 'campoDeTexto' name = 'emailFuncionario'>
             <input type = 'text' pattern="[0-9]{11}" placeholder = "CPF - Numeros Somente" class = 'campoDeTexto' name = 'cpfFuncionario'>
             <input type= 'hidden' name ='tipoRequisicao' value = '1'/>
+            
+            <h3 class = 'textoEntradaHora'> Horario De Entrada</h3>
+            <input value = '08:00' type='time' class = 'campoDeTexto' name = 'horarioEntradaFuncionario'/>
+            <h3 class = 'textoEntradaHora'> Horario Da Entrada no Almoco</h3>
+            <input value = '12:00'type='time' class = 'campoDeTexto' name = 'horarioEntradaAlmocoFuncionario'/>
+            <h3 class = 'textoEntradaHora'> Horario Da Saida no Almoco</h3>
+            <input value = '13:00'type='time' class = 'campoDeTexto' name = 'horarioSaidaAlmocoFuncionario'/>
+            <h3 class = 'textoEntradaHora'> Horario De Saída</h3>
+            <input value = '17:00'type='time' class = 'campoDeTexto' name = 'horarioSaidaFuncionario'/>
 
+            <input type = 'number' placeholder = "Carga Horaria Mensal (H)" class = 'campoDeTexto' name = 'cargaHorariaFuncionario'>
+            <select name="horarioDeTrabalho" class = 'campoDeTexto'>
+                <option value="Segunda a Sexta">Segunda a Sexta</option>
+                <option value="Segunda a Sábado">Segunda a Sábado</option>
+                <option value="Finais de Semana">Finais de Semana</option>
+                <option value="Todo Dia">Todo Dia</option>
+                <option value="Horista">Horista</opition>
+            </option>
+
+            </select>
             <center>
              <input type = "submit" value = "Adicionar" id = "botaoSubmit">
             </center>

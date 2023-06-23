@@ -40,9 +40,9 @@
 </head>
 <body>
 
-    <?php
-        include('../cabecalho/cabecalho.php');
-    ?> 
+        <?php
+                include('../cabecalho/cabecalho.php');
+        ?> 
 
     <center>
         <h1 id="titulo">Atualizar Dados</h1>

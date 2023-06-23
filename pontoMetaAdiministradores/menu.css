@@ -1,3 +1,21 @@
+@media (max-width: 300px) {
+    .funcionario{
+        font-size: 15px;
+        width: 90%;
+    }
+}
+@media (max-width: 700px) and (min-width: 301px) {
+    .funcionario{
+        font-size: 20px;
+        width: 90%;
+    }
+}
+@media (min-width: 701px) {
+    .funcionario{
+        font-size: 20px;
+        width: 40%;
+    }
+}
 /*Mostrar Funcionarios*/
 
 .funcionario:hover{
@@ -15,7 +33,6 @@
     min-height: 300px;
     background-color: rgb(255, 255, 255);
     display: inline-block;
-    width: 40%;
     margin-top: 8%;
     margin-left:4%;
     margin-right:4%;
@@ -23,7 +40,6 @@
     border-top-right-radius: 50px;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
-    font-size: 20px;
     overflow:auto;
     word-wrap: break-word;
 }

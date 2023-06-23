@@ -3,10 +3,14 @@
   verificaSessao("../../login.php"); //Verifica a sessão caso não exista redireciona para a pagina de login
 
   include_once("../../conexao.php");
+  include_once("../../classes/operacoes.php");
+
+  
 
   $erro = '';
   $sucesso = '';
 
+  $tamanhoTabela = 8;
   if($_SERVER['REQUEST_METHOD'] == 'POST'){ //Se o metodo de requisição foi do tipo post
 
     $cpf = $_POST['cpf'];
@@ -44,9 +48,14 @@
 
   try {
     $result = encontraPontos($cpf,$pdo);
+    $dados = dadosFuncionario($cpf,$pdo);
+    $cargaHoraria = $dados['cargaHoraria'].":00:00";
+
   } catch (Exception $e) {
     header('location: ../menuPage.php?erro=2'); //Erro de conexão
+    exit;
   }
+
   ?>
 
 <!DOCTYPE html>
@@ -79,46 +88,162 @@
 
 
 <center>
-  <table border = "1px">
+  <table border = "1px" align = 'center'>
       
     <tr>
-        <td colspan="7">
-        <center>
+        <th align = 'center' bgcolor = 'Red' colspan= <?=$tamanhoTabela+1?>>
           <?="Pontos do Empregado $nome"?>
-        </center>
-        </td>
+        </th>
     </tr>
+
     <tr>
 
-      <th>Dia</th>
-      <th>Mês</th>
-      <th>Data</th>
-      <th>Horario de Entrada</th>
-      <th>Horario de Inicio do Intervalo</th>
-      <th>Horario de Fim do Intervalo</th>
-      <th>Horario de Saída </th>
+      <th bgcolor = 'Gainsboro' colspan="2">Horario de Entrada</th>
+      <th bgcolor = 'Gainsboro' colspan="2">Horario de Entrada e Saida do Almoco</th>
+      <th bgcolor = 'Gainsboro' colspan="2">Horario de Saida</th>
+      <th bgcolor = 'Gainsboro' colspan="2">Horario de Trabalho</th>
+      <th bgcolor = 'Gainsboro' colspan="2">Carga Horaria Mensal</th>
+
+    </tr>
+    <tr>
+        <td colspan="2" align = 'center'><?=$dados['horarioEntrada'];?></td>
+        <td align = 'center'><?=$dados['horarioEntradaAlmoco'];?></td>
+        <td align = 'center'><?=$dados['horarioSaidaAlmoco'];?></td>
+        <td colspan="2" align = 'center'><?=$dados['horarioSaida'];?></td>
+        <td colspan="2" align = 'center'><?=$dados['horarioDeTrabalho'];?></td>
+        <td rowspan = '4' align = 'center'><?=$cargaHoraria;?></td>
+
+    </tr>
+
+    <tr>
+
+      <th bgcolor = 'Gainsboro'>Dia</th>
+      <th bgcolor = 'Gainsboro'>Mês</th>
+      <th bgcolor = 'Gainsboro'>Data</th>
+      <th bgcolor = 'Gainsboro'>Horario de Entrada</th>
+      <th bgcolor = 'Gainsboro'>Horario de Inicio do Intervalo</th>
+      <th bgcolor = 'Gainsboro'>Horario de Fim do Intervalo</th>
+      <th bgcolor = 'Gainsboro'>Horario de Saída </th>
+      <th bgcolor = 'Gainsboro'>Horas Trabalhadas </th>
 
     </tr>
 
     <?php 
-      $dados = $result->fetchall(PDO::FETCH_ASSOC);
+      $dadosPontos = $result->fetchall(PDO::FETCH_ASSOC);
 
-      foreach ($dados as $key => $linha) {
+      $horasTrabalhadasMês = '00:00:00';
+      $ultimoMes = 0;
+      $primeiraLinha = true;
+
+      foreach ($dadosPontos as $key => $linha) {
+
+        if($primeiraLinha){
+          $ultimoMes = $linha['mes'];
+          $primeiraLinha = false;
+        }
+        if($ultimoMes != $linha['mes']){ // Se mudou de Mês
           echo "
-          <tr>
-          <td>".$linha['dia']."</td>
-          <td>".$linha['mes']."</td>
-          <td>".date('d/m/Y',strtotime($linha['dataPonto']))."</td>
-          <td>".$linha['horaEntrada']."</td>
-          <td>".$linha['horaEntradaAlmoco']."</td>
-          <td>".$linha['horaSaidaAlmoco']."</td>
-          <td>".$linha['horaSaida']."</td>
+            <tr>
+              <th bgcolor = 'Gray' colspan='$tamanhoTabela' align = 'center'> Mês $ultimoMes</td>
+            </tr> 
+            <tr>
+              <th bgcolor = 'Gainsboro' colspan='".intdiv($tamanhoTabela,2)."' align = 'center'>Horas Trabalhadas</td>
+              <th bgcolor = 'Gainsboro' colspan='".($tamanhoTabela - intdiv($tamanhoTabela,2))."' align = 'center'>Saldo de Horas</td>
+            </tr>
+            <tr>
+              <td colspan='".intdiv($tamanhoTabela,2)."' align = 'center'>".$horasTrabalhadasMês."</td>
+              <td colspan='".intdiv($tamanhoTabela,2)."' align = 'center'>".subtraiTempo($horasTrabalhadasMês,$cargaHoraria)."</td>
+            </tr>
 
-          </tr>
+            <tr><td colspan = '$tamanhoTabela' rowspan = '1'></td></tr>
+            <tr>
+            <th bgcolor = 'Gainsboro'>Dia</th>
+            <th bgcolor = 'Gainsboro'>Mês</th>
+            <th bgcolor = 'Gainsboro'>Data</th>
+            <th bgcolor = 'Gainsboro'>Horario de Entrada</th>
+            <th bgcolor = 'Gainsboro'>Horario de Inicio do Intervalo</th>
+            <th bgcolor = 'Gainsboro'>Horario de Fim do Intervalo</th>
+            <th bgcolor = 'Gainsboro'>Horario de Saída </th>
+            <th bgcolor = 'Gainsboro'>Horas Trabalhadas </th>  
+            </tr>
+          ";
+          $ultimoMes = $linha['mes'];
+          $horasTrabalhadasMês = '00:00:00';
+        }
 
+          if(isset($dadosPontos[$key - 1])){
+              $linhaAnt = $dadosPontos[$key - 1];
+              if($linhaAnt['mes'] == $linha['mes'] && $linha['dia'] - $linhaAnt['dia'] > 1){
+                $diasPassadosSemPonto = $linha['dia'] - $dadosPontos[$key - 1]['dia'] -1;
+                for($i = 1; $i <= $diasPassadosSemPonto;$i++){
+                    echo "
+
+                    <tr>
+                      <td>".strval(intval($linhaAnt['dia'])+$i)."</td>
+                      <td>".$linha['mes']."</td>
+                      <td>".strval(intval($linhaAnt['dia'])+$i)."/".date('m/Y',strtotime($linha['dataPonto']))."</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>00:00:00</td>
+                    </tr>
+                    ";     
+                }
+              }
+          }
+
+          //Pega o valor de horas trabalhadas na linha
+          if(
+          (($linha['horaSaida'] != NULL 
+          || $linha['horaEntradaAlmoco'] != NULL) 
+          && $linha['horaEntrada'] != NULL) 
+          ){
+            if($linha['horaSaida'] == NULL && $linha['horaEntradaAlmoco'] != NULL){
+              $horasTrabalhadas = subtraiTempo($linha['horaEntradaAlmoco'],$linha['horaEntrada']);  
+            }else{
+              $horasTrabalhadas = subtraiTempo(
+                subtraiTempo($linha['horaSaida'],$linha['horaEntrada']),
+                subtraiTempo($linha['horaSaidaAlmoco'],$linha['horaEntradaAlmoco'])
+              );
+            }
+          }else{ 
+            //Se a hora de saida ou a hora de entrada no almoco e a hora de entrada for for vazia não contabiliza horas
+            $horasTrabalhadas = '00:00:00';
+          }
+          ////////////////////////////////////////////
+
+          if($horasTrabalhadas[0] == '-'){
+            $horasTrabalhadas =  substr($horasTrabalhadas,1,strlen($horasTrabalhadas)); //Retira o - do inicio
+          }
+
+          $horasTrabalhadasMês = somaTempo($horasTrabalhadasMês, $horasTrabalhadas); 
+            echo "
+            <tr>
+            <td>".$linha['dia']."</td>
+            <td>".$linha['mes']."</td>
+            <td>".date('d/m/Y',strtotime($linha['dataPonto']))."</td>
+            <td>".$linha['horaEntrada']."</td>
+            <td>".$linha['horaEntradaAlmoco']."</td>
+            <td>".$linha['horaSaidaAlmoco']."</td>
+            <td>".$linha['horaSaida']."</td>
+            <td>".$horasTrabalhadas."</td>
+            </tr>
           ";
       }
-    
+
+      echo "
+      <tr>
+      <th bgcolor = 'Gray' colspan='$tamanhoTabela' align = 'center'> Mês $ultimoMes</td>
+    </tr>
+    <tr>
+      <th bgcolor = 'Gainsboro' colspan='".intdiv($tamanhoTabela,2)."' align = 'center'>Horas Trabalhadas</td>
+      <th bgcolor = 'Gainsboro' colspan='".intdiv($tamanhoTabela,2)."' align = 'center'>Saldo de Horas</td>
+    </tr>
+      <tr>
+        <td colspan='".intdiv($tamanhoTabela,2)."' align = 'center'>".$horasTrabalhadasMês."</td>
+        <td colspan='".intdiv($tamanhoTabela,2)."' align = 'center'>".subtraiTempo($horasTrabalhadasMês,$cargaHoraria)."</td>
+      </tr>";
     ?>
 
 

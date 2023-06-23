@@ -1,3 +1,78 @@
+
+@media (max-width: 499px) {
+    .linkNavegador{
+        font-size:8px;
+    }
+
+    h1#titulo{
+        margin-top: 30%;
+        font-size:30px;
+    }
+    .campoDeTexto{
+        font-size:smaller;
+        width: 80%;
+    }
+    img#logo{
+        margin-left: 5%;
+        width: 10%;
+        height:40px;
+        margin-top:1%;
+    }
+    input#logout{
+        font-size: x-small;
+        margin-left: 15%;
+        margin-top: 35%;
+    }
+}
+@media (max-width: 769px) and (min-width: 500px) {
+    .linkNavegador{
+        font-size:10px;
+    }
+
+    h1#titulo{
+        margin-top: 20%;
+        font-size:30px;
+    }
+
+    .campoDeTexto{
+        font-size:medium;
+        width: 80%;
+    }
+
+    img#logo{
+        margin-left: 5%;
+        width: 12%;
+    }
+    input#logout{
+        font-size: small;
+        margin-left: 15%;
+        margin-top: 35%;
+    }
+}
+@media (min-width: 770px) {
+    .linkNavegador{
+        font-size:medium;
+    }
+    h1#titulo{
+        margin-top: 9%;
+        font-size:50px;
+    }
+    .campoDeTexto{
+        font-size:medium;
+        width: 40%;
+    }
+
+    img#logo{
+        margin-left: 2%;
+        width: 5%;
+    }
+    input#logout{
+        font-size: large;
+        margin-left: 15%;
+        margin-top: 15%;
+    }
+}
+
 :root{
     --cor-metamorfose:rgb(247, 148, 29);
     --cor-metamorfose-transp:rgba(247, 149, 29, 0.76);
@@ -39,6 +114,10 @@ a{
 }
 body{
     background-color: var(--cor-cinza-claro);
+    min-width: 400px;
+    max-width: 14000px;
+    border-radius: 15px;
+    margin: auto;
 }
 /*cabeçalho*/
 
@@ -55,10 +134,7 @@ body{
     box-shadow: 1px 1px 10px 1px rgba(32, 32, 32, 0.267);
 }
 
-img#logo{
-    margin-left: 2%;
-    width: 5%;
-}
+
 
 nav#navigator{
     margin-left: 0%;
@@ -78,7 +154,6 @@ img#logo:hover{
     text-decoration: none;
     font-family:'Times New Roman';
     font-weight: bold;
-    font-size:medium;
     background-color: rgba(255, 255, 255, 0);
     color: rgba(0, 0, 0, 0.486);
     margin-left: 0%;
@@ -94,7 +169,6 @@ div#espaco{
 .linkNavegador:hover{
     animation: animacaoLinkMenu;
     animation-duration: 0.5s;
-
     background-color: var(--cor-metamorfose);
     border-radius: 20px;
     transform: scale(0.9);
@@ -187,7 +261,6 @@ input#entradaImagem{
     font-size:medium;
     padding: 5%;
     display: block;
-    width: 40%;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -205,17 +278,15 @@ select:focus,textarea:focus, input:focus {
 
 input#botaoSubmit{
     font-family: 'Zabal', Arial, Helvetica, sans-serif;
-    font-size: large;
+    font-size: 90%;
     border-color: rgba(210, 180, 140, 0);
     border-radius: 30px;
     padding: 2%;
-    width: 10%;
+    width: 150px;
     margin-top: 4%;
     margin-bottom: 4%;
-    text-overflow: initial;
-    text-align: center;
     background-color: rgba(255, 255, 255, 0.678);
-    color: black;
+    color: #000000db;
 }
 
 input#botaoSubmit:hover{
@@ -230,9 +301,6 @@ input#logout{
     color: red;
     background-color: none;
     font-family: 'Zabal', Arial, Helvetica, sans-serif;
-    font-size: large;
-    margin-left: 15%;
-    margin-top: 15%;
     border-radius: 0px;
     background-color: rgba(255, 255, 255, 0.678);
     border-color: rgba(210, 180, 140, 0);
@@ -245,8 +313,20 @@ input#logout:hover{
 }
 
 h1#titulo{
-    margin-top: 9%;
-    font-size:50px;
     font-family: 'Zabal','arial';
     color: var(--cor-metamorfose);
+}
+
+.textoEntradaHora{
+    text-align: center;
+    margin-top: 50px;
+    color: var(--cor-metamorfose);
+}
+
+table{
+    border-radius: 10px;
+}
+/*Cabeçalhos das tabelas*/
+th{ 
+    border-radius: 5px;
 }
