@@ -18,10 +18,10 @@ create table if not exists pontos(
 	fk_cpf varchar(45) not null,
     mes int,
     dia int,
-    horaEntrada time,
-    horaEntradaAlmoco time,
-    horaSaidaAlmoco time,
-    horaSaida time,
+    horarioEntrada time,
+    horarioEntradaAlmoco time,
+    horarioSaidaAlmoco time,
+    horarioSaida time,
     dataPonto date,
     foreign key (fk_cpf) references funcionarios(cpf)
 );
